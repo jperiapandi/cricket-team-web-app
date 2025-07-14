@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/cricket-team-web-app/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

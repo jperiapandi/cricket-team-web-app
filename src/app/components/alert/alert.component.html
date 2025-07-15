@@ -1,2 +1,5 @@
-<ng-content></ng-content>
-<button icon-button="close"></button>
+<div class="flex-grow">
+  <ng-content></ng-content>
+</div>
+
+<button icon-button="close" (click)="onCloseClick($event)"></button>

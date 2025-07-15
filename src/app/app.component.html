@@ -11,22 +11,42 @@
 </header>
 
 <main class="row-container">
-  <section class="players">
+  <section class="players-section">
     <h1>Available Players</h1>
 
-    <app-alert>
+    @if (showInitialAlert()) {
+    <app-alert (close)="onAlertClose()">
       <span>Click select button to add a player to your team.</span>
     </app-alert>
+    }
 
-        <p>There are {{ playersSvc.players().length }} players available.</p>
+    <p>There are {{ playersSvc.players().length }} players available.</p>
+
+    <div>
+      <app-available-player
+        *ngFor="let player of playersSvc.players(); index as i"
+        [player]="player"
+        (select)="playersSvc.selectPlayer($event)"
+      ></app-available-player>
+    </div>
   </section>
 
   <section class="selected-players">
     <h1>Selected Players</h1>
+    @if (playersSvc.selectedPlayers().length==0) {
     <p>
       There are no players available in your team. Create your Dream team by
       selecting Players.
     </p>
+    }
+
+    <div>
+      <app-selected-player
+        *ngFor="let player of playersSvc.selectedPlayers(); index as i"
+        [player]="player"
+        (remove)="playersSvc.removePlayer($event)"
+      ></app-selected-player>
+    </div>
   </section>
 
   <router-outlet />

@@ -1,0 +1,5 @@
+<p>{{ player().name }}</p>
+<div>
+  <button>View Detail</button>
+  <button (click)="onSelectClick($event, player().id)" [disabled]="player().selected">Select</button>
+</div>

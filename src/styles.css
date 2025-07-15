@@ -29,16 +29,18 @@
   gap: 1rem;
 }
 
-section.players {
-  width: 40%;
+.players-section {
   background-color: var(--surface-color);
   color: var(--on-surface);
   padding: 0.25rem;
   height: 100vh;
+
+  width: 50%;
 }
 
 .selected-players {
   padding: 0.25rem;
+  width: 50%;
 }
 
 header {
@@ -71,7 +73,12 @@ header {
   margin: 0;
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   gap: 1rem;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 
 .icon-button {

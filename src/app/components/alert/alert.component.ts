@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { IconButtonDirective } from '../../directives/icon.button';
 
 @Component({
@@ -11,8 +11,15 @@ import { IconButtonDirective } from '../../directives/icon.button';
   },
 })
 export class AlertComponent {
+  type = input<'info' | 'warn' | 'error'>('info');
   dismissible = input(false);
+  close = output();
+
   readonly classNames = computed(() => {
     return 'alert-cmp';
   });
+
+  onCloseClick(evt: MouseEvent) {
+    this.close.emit();
+  }
 }

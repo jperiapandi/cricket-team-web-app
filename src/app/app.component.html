@@ -22,7 +22,7 @@
 
     <p>There are {{ playersSvc.players().length }} players available.</p>
 
-    <div>
+    <div class="available-players-container">
       <app-available-player
         *ngFor="let player of playersSvc.players(); index as i"
         [player]="player"
@@ -32,13 +32,40 @@
   </section>
 
   <section class="selected-players">
-    <h1>Selected Players</h1>
     @if (playersSvc.selectedPlayers().length==0) {
     <p>
       There are no players available in your team. Create your Dream team by
       selecting Players.
     </p>
-    }
+    } @else {
+    <h1>Selected Players</h1>
+
+    <div class="team-statistic-container">
+      <div class="statistic">
+        <span class="title">Total: </span>
+        <span class="value">{{ playersSvc.selectedTeam().total }}</span>
+      </div>
+
+      <div class="statistic">
+        <span class="title">Wicket Keeper: </span>
+        <span class="value">{{ playersSvc.selectedTeam().wicketKeeper }}</span>
+      </div>
+
+      <div class="statistic">
+        <span class="title">Batters: </span>
+        <span class="value">{{ playersSvc.selectedTeam().batters }}</span>
+      </div>
+
+      <div class="statistic">
+        <span class="title">Bowlers: </span>
+        <span class="value">{{ playersSvc.selectedTeam().bowlers }}</span>
+      </div>
+
+      <div class="statistic">
+        <span class="title">All Rounders: </span>
+        <span class="value">{{ playersSvc.selectedTeam().allRounders }}</span>
+      </div>
+    </div>
 
     <div>
       <app-selected-player
@@ -47,6 +74,7 @@
         (remove)="playersSvc.removePlayer($event)"
       ></app-selected-player>
     </div>
+    }
   </section>
 
   <router-outlet />

@@ -6,6 +6,9 @@ import { Player } from '../../types/player';
   imports: [],
   templateUrl: './available-player.component.html',
   styles: ``,
+  host:{
+    'class':'available-player-cmp'
+  }
 })
 export class AvailablePlayerComponent {
   player = input.required<Player>();

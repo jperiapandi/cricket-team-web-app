@@ -1,5 +1,16 @@
-<p>{{ player().name }}</p>
-<div>
-  <button>View Detail</button>
-  <button (click)="onSelectClick($event, player().id)" [disabled]="player().selected">Select</button>
+<div class="title-container">
+  <img [src]="player().image" class="player-avatar" />
+  <div>
+    <h3 class="name">{{ player().name }}</h3>
+    <p>Age: {{ player().age }}</p>
+  </div>
+</div>
+
+<div class="controls-container">
+  <button
+    (click)="onSelectClick($event, player().id)"
+    [disabled]="player().selected"
+  >
+    Select
+  </button>
 </div>

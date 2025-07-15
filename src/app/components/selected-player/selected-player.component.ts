@@ -5,6 +5,9 @@ import { Player } from '../../types/player';
   selector: 'app-selected-player',
   imports: [],
   templateUrl: './selected-player.component.html',
+  host: {
+    "class": 'selected-player-cmp',
+  },
   styles: ``,
 })
 export class SelectedPlayerComponent {

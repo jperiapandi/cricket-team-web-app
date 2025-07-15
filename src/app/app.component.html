@@ -3,7 +3,7 @@
 
   <h1>Create your Dream Team</h1>
 
-  <nav>
+  <nav class="nav-container">
     <ul>
       <li>About this app</li>
     </ul>
@@ -31,7 +31,7 @@
     </div>
   </section>
 
-  <section class="selected-players">
+  <section class="selected-players-section">
     @if (playersSvc.selectedPlayers().length==0) {
     <p>
       There are no players available in your team. Create your Dream team by
@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="selected-players-container">
       <app-selected-player
         *ngFor="let player of playersSvc.selectedPlayers(); index as i"
         [player]="player"

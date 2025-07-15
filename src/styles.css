@@ -68,7 +68,7 @@ button:disabled {
   width: 50%;
 }
 
-.selected-players {
+.selected-players-section {
   padding: 0.25rem;
   width: 50%;
 }
@@ -118,6 +118,11 @@ button:disabled {
   padding-right: 0.25rem;
 }
 
+.selected-players-container {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .available-player-cmp {
   background: white;
   border-radius: 8px;
@@ -158,9 +163,13 @@ button:disabled {
   gap: 1rem;
   justify-content: flex-start;
   align-items: center;
-  padding: 1rem 0rem;
+  padding: 0.75rem 0rem;
   border-bottom: 1px solid;
   border-bottom-color: var(--border-color-light);
+
+  .name {
+    min-width: 40%;
+  }
 }
 
 .team-statistic-container {
@@ -180,5 +189,56 @@ button:disabled {
   .value {
     font-size: 1rem;
     color: var(--on-surface-light);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  header {
+    min-height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo-container {
+    display: none;
+  }
+
+  .nav-container {
+    display: none;
+  }
+
+  .row-container {
+    flex-direction: column;
+  }
+
+  .players-section {
+    height: auto;
+    width: auto;
+  }
+
+  .selected-players-section {
+    width: auto;
+    height: auto;
+  }
+
+  .available-players-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .selected-players-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .team-statistic-container {
+    flex-direction: column;
+    gap: 0.125rem;
+
+    padding: 0.5rem;
   }
 }

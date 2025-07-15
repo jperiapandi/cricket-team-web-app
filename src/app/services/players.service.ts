@@ -3,6 +3,7 @@ import { GetPlayersAPIResp, Player } from '../types/player';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { SelectedTeam, TeamRule } from '../types/teamRule';
+import { GradesSortMap } from '../types/grade';
 
 @Injectable({
   providedIn: 'root',
@@ -41,19 +42,16 @@ export class PlayersService {
       }
     });
 
+    //Sort players by Grade
+    updatedPlayers.sort((p1, p2) => {
+      return GradesSortMap[p1.grade] - GradesSortMap[p2.grade];
+    });
+
     return updatedPlayers;
   });
 
   private _selectedPlayers = signal<Player[]>([]);
   readonly selectedPlayers = this._selectedPlayers.asReadonly();
-
-  // private _selectedTeam = signal<SelectedTeam>({
-  //   total: 0,
-  //   wicketKeeper: 0,
-  //   batsmen: 0,
-  //   bowlers: 0,
-  //   allRounders: 0,
-  // });
 
   readonly selectedTeam = computed<SelectedTeam>(() => {
     //
@@ -109,7 +107,32 @@ export class PlayersService {
     const player = this.players().find((p) => {
       return p.id == id;
     });
+
     if (player) {
+      //When trying to add a Player
+      if (this.selectedTeam().total == 11) {
+        console.warn(
+          `Team selection already complete. Remove some existing players to add ${player.name} to your team!`
+        );
+
+        return;
+      }
+
+      //When trying to add a Wicket-Keeper
+      if (player.role == 'Wicket-Keeper') {
+        const existingBowler = this._selectedPlayers().find((p) => {
+          return p.role === 'Wicket-Keeper';
+        });
+
+        if (existingBowler) {
+          console.warn(
+            `Wicket Keeper ${existingBowler.name} is already present in ypur team. Are you willing to replace him with ${player.name}`
+          );
+          return;
+        }
+      }
+
+      
       this._selectedPlayers.update((prevList) => {
         return [...prevList, player];
       });

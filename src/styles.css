@@ -1,1 +1,87 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --primary-color: hsl(10, 20%, 20%);
+  --secondary-color: hsl(9, 23%, 49%);
+  --surface-color: hsl(26, 80%, 96%);
+
+  --on-primary: hsl(10, 79%, 93%);
+  --on-surface: hsl(29, 100%, 5%);
+}
+
+* {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300; /* Use a value from 100 to 900*/
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+
+  padding: 0;
+  margin: 0;
+}
+
+.row-container {
+  display: flex;
+  gap: 1rem;
+}
+
+section.players {
+  width: 40%;
+  background-color: var(--surface-color);
+  color: var(--on-surface);
+  padding: 0.25rem;
+  height: 100vh;
+}
+
+.selected-players {
+  padding: 0.25rem;
+}
+
+header {
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem;
+  background-color: var(--primary-color);
+
+  color: var(--on-primary);
+
+  ul {
+    list-style: none;
+  }
+}
+
+.logo-container {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*Components*/
+.alert-cmp {
+  padding: 1rem;
+  border: 1px solid hsl(224, 100%, 87%);
+  border-radius: 4px;
+  background-color: hsl(224, 100%, 97%);
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.icon-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-button:disabled {
+  cursor: not-allowed;
+}

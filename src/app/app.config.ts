@@ -13,6 +13,7 @@ import {
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getFunctions, provideFunctions } from '@angular/fire/functions';
 import { environment } from '../environments/environment.development';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,5 +26,6 @@ export const appConfig: ApplicationConfig = {
     provideFunctions(() => getFunctions()),
     ScreenTrackingService,
     UserTrackingService,
+    provideHttpClient(),
   ],
 };

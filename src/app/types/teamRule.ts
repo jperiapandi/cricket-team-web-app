@@ -17,4 +17,8 @@ export type SelectedTeam = {
   batters: number;
   bowlers: number;
   allRounders: number;
+
+  errorWicketKeepers: boolean;
+  errorBatters: boolean;
+  errorBowlers: boolean;
 };

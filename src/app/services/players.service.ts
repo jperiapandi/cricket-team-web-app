@@ -57,7 +57,7 @@ export class PlayersService {
     //
     const selPlayers = this.selectedPlayers();
     let wicketKeeper = 0;
-    let batsmen = 0;
+    let batters = 0;
     let bowlers = 0;
     let allRounders = 0;
 
@@ -67,7 +67,7 @@ export class PlayersService {
           wicketKeeper++;
           break;
         case 'Batter':
-          batsmen++;
+          batters++;
           break;
         case 'Bowler':
           bowlers++;
@@ -78,12 +78,27 @@ export class PlayersService {
       }
     });
 
+    //Calculate error states
+    const errorWicketKeepers = wicketKeeper != this.rule.wicketKeeper;
+    const errorBatters = batters + allRounders < this.rule.batsmen.minimum;
+    const errorBowlers = bowlers + allRounders < this.rule.bowlers.minimum;
+
+    console.log(
+      `errorBatters: ${errorBatters} comparing ${batters + allRounders} & ${
+        this.rule.batsmen.minimum
+      }`
+    );
+
     return {
       total: selPlayers.length,
       wicketKeeper,
-      batters: batsmen,
+      batters,
       bowlers,
       allRounders,
+
+      errorWicketKeepers,
+      errorBatters,
+      errorBowlers,
     };
   });
 
@@ -132,7 +147,6 @@ export class PlayersService {
         }
       }
 
-      
       this._selectedPlayers.update((prevList) => {
         return [...prevList, player];
       });

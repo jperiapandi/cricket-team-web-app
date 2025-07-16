@@ -10,17 +10,19 @@
   </nav>
 </header>
 
-<main class="row-container">
-  <section class="players-section">
-    <h1>Available Players</h1>
+<main class="main-container">
+  <section class="available-players-section">
+    <div class="section-title-bar">
+      <h1>Available Players</h1>
+
+      <div>There are {{ playersSvc.players().length }} players available.</div>
+    </div>
 
     @if (showInitialAlert()) {
     <app-alert (close)="onAlertClose()">
       <span>Click select button to add a player to your team.</span>
     </app-alert>
     }
-
-    <p>There are {{ playersSvc.players().length }} players available.</p>
 
     <div class="available-players-container">
       <app-available-player
@@ -33,51 +35,80 @@
 
   <section class="selected-players-section">
     @if (playersSvc.selectedPlayers().length==0) {
-    <p>
-      There are no players available in your team. Create your Dream team by
-      selecting Players.
-    </p>
+    <div class="no-players-container">
+      <app-alert>
+        There are no players available in your team. Start creating your Dream
+        Team by selecting Players.
+      </app-alert>
+    </div>
+
     } @else {
-    <h1>Selected Players</h1>
 
-    <div class="team-statistic-container">
-      <div class="statistic">
-        <span class="title">Total: </span>
-        <span class="value">{{ playersSvc.selectedTeam().total }}</span>
+    <div class="section-title-bar">
+      <h1>Dream Team's Players</h1>
+      @if (playersSvc.selectedTeam().total===playersSvc.rule.total) {
+      <div>Your Team is ready!</div>
+      }
+    </div>
+
+    <div class="selected-players-bg">
+      <div class="errors-container">
+        @if (playersSvc.selectedTeam().errorWicketKeepers) {
+        <div>Team should have one Wicket Keeper.</div>
+        } @if (playersSvc.selectedTeam().errorBatters) {
+        <div>
+          Minimum {{ playersSvc.rule.batsmen.minimum }} Batsmen are required.
+        </div>
+        } @if (playersSvc.selectedTeam().errorBowlers) {
+        <div>
+          Minimum {{ playersSvc.rule.bowlers.minimum }} Bowlers are required.
+        </div>
+        }
       </div>
 
-      <div class="statistic">
-        <span class="title">Wicket Keeper: </span>
-        <span class="value">{{ playersSvc.selectedTeam().wicketKeeper }}</span>
+      <div class="team-statistic-container">
+        <div class="statistic">
+          <span class="title">Total: </span>
+          <span class="value">{{ playersSvc.selectedTeam().total }}</span>
+        </div>
+
+        <div class="statistic">
+          <span class="title">Wicket Keeper: </span>
+          <span class="value">{{
+            playersSvc.selectedTeam().wicketKeeper
+          }}</span>
+        </div>
+
+        <div class="statistic">
+          <span class="title">Batters: </span>
+          <span class="value">{{ playersSvc.selectedTeam().batters }}</span>
+        </div>
+
+        <div class="statistic">
+          <span class="title">Bowlers: </span>
+          <span class="value">{{ playersSvc.selectedTeam().bowlers }}</span>
+        </div>
+
+        <div class="statistic">
+          <span class="title">All Rounders: </span>
+          <span class="value">{{ playersSvc.selectedTeam().allRounders }}</span>
+        </div>
       </div>
 
-      <div class="statistic">
-        <span class="title">Batters: </span>
-        <span class="value">{{ playersSvc.selectedTeam().batters }}</span>
-      </div>
-
-      <div class="statistic">
-        <span class="title">Bowlers: </span>
-        <span class="value">{{ playersSvc.selectedTeam().bowlers }}</span>
-      </div>
-
-      <div class="statistic">
-        <span class="title">All Rounders: </span>
-        <span class="value">{{ playersSvc.selectedTeam().allRounders }}</span>
+      <div class="selected-players-container">
+        <app-selected-player
+          *ngFor="let player of playersSvc.selectedPlayers(); index as i"
+          [player]="player"
+          (remove)="playersSvc.removePlayer($event)"
+        ></app-selected-player>
       </div>
     </div>
 
-    <div class="selected-players-container">
-      <app-selected-player
-        *ngFor="let player of playersSvc.selectedPlayers(); index as i"
-        [player]="player"
-        (remove)="playersSvc.removePlayer($event)"
-      ></app-selected-player>
-    </div>
     }
   </section>
 
   <router-outlet />
+
 </main>
 
 <footer></footer>

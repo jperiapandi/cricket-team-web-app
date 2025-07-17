@@ -300,3 +300,11 @@ a {
     align-items: center;
   }
 }
+
+@media only screen and (min-width: 1200px) {
+  .available-players-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+}

@@ -18,6 +18,24 @@
 
   --btn-primary-color: hsl(173, 51%, 22%);
   --btn-primary-hover-color: hsl(173, 51%, 50%);
+
+  --drop-shadow-color: hsla(0, 0%, 15%, 0.15);
+
+  --info-bg-color: hsl(212, 100%, 73%);
+  --info-text-color: hsl(212, 74%, 14%);
+  --info-border-color: hsl(212, 70%, 55%);
+
+  --warn-bg-color: hsl(46, 100%, 71%);
+  --warn-text-color: hsl(41, 75%, 24%);
+  --warn-border-color: hsl(41, 82%, 63%);
+
+  --error-bg-color: hsl(17, 92%, 81%);
+  --error-text-color: hsl(0, 100%, 31%);
+  --error-border-color: hsl(17, 85%, 35%);
+
+  --success-bg-color: hsl(128, 92%, 81%);
+  --success-text-color: hsl(101, 98%, 17%);
+  --success-border-color: hsl(130, 85%, 35%);
 }
 
 * {
@@ -31,18 +49,7 @@
   margin: 0;
 }
 
-header {
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.25rem;
-  background-color: var(--primary-color);
-
-  color: var(--on-primary);
-
-  ul {
-    list-style: none;
-  }
-}
+/** Styles applicable for all devices **/
 
 button {
   cursor: pointer;
@@ -63,263 +70,221 @@ button:disabled {
   cursor: default;
 }
 
-.row-container {
+ul,
+ol {
+  list-style: none;
+}
+
+.player-avatar {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: thin solid;
+  border-color: var(--border-color-light);
+  background-color: white;
+}
+
+.alert-cmp {
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+
+  border: solid thin;
+  border-radius: 0.5rem;
+
+  button {
+    background: none;
+    color: inherit;
+  }
+
+  button:hover {
+    background: none;
+  }
+}
+
+.info {
+  background-color: var(--info-bg-color);
+  color: var(--info-text-color);
+  border-color: var(--info-border-color);
+}
+
+.warn {
+  background-color: var(--warn-bg-color);
+  color: var(--warn-text-color);
+  border-color: var(--warn-border-color);
+}
+
+.error {
+  background-color: var(--error-bg-color);
+  color: var(--error-text-color);
+  border-color: var(--error-border-color);
+}
+
+.success {
+  background-color: var(--success-bg-color);
+  color: var(--success-text-color);
+  border-color: var(--success-border-color);
+}
+/***********************/
+
+.header-container {
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  padding: 1rem 1rem;
+
+  .logo-n-name-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    h1 {
+      font-weight: bolder;
+    }
+
+    .app-logo {
+      width: 3rem;
+      aspect-ratio: 1;
+    }
+  }
+}
+
+.nav-container {
+  display: none;
 }
 
 .main-container {
-  background-color: var(--surface-color);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  padding: 1rem;
-}
 
-.available-players-section {
-  color: var(--on-surface);
-}
+  padding: 1rem 1rem;
 
-.selected-players-section {
-  color: var(--on-surface);
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 .section-title-bar {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
+}
+
+.available-players-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.available-player-cmp {
+  background-color: var(--surface-color);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: thin solid var(--border-color-light);
+  filter: drop-shadow(1px 2px 2px var(--drop-shadow-color));
+
+  .title-container {
+    display: flex;
+  }
+
+  .name {
+    font-weight: 350;
+    color: var(--on-surface);
+    margin-bottom: 0.25rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: var(--on-surface-light);
+  }
+  .controls-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .selected-players-bg {
   background-color: white;
+  border: solid thin var(--border-color-light);
   border-radius: 1rem;
   padding: 1rem;
-  border: 1px solid;
-  border-color: var(--border-color-light);
+  padding-bottom: 3rem;
+  filter: drop-shadow(1px 2px 2px var(--drop-shadow-color));
 }
 
-.no-players-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 2rem;
-
-  p {
-    max-width: 20rem;
-    flex: 1;
-  }
-}
-
-.errors-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  div {
-    font-size: small;
-    color: var(--warning-color);
-  }
-}
-
-.logo-container {
-  width: 5rem;
-  height: 5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/*Components*/
-.alert-cmp {
-  padding: 1rem;
-  border: 1px solid hsl(224, 100%, 87%);
-  border-radius: 4px;
-  background-color: hsl(224, 100%, 97%);
-  margin: 0;
+.selected-player-cmp {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
   gap: 1rem;
+  padding: 0.75rem 0rem;
+  border-bottom: solid thin var(--border-color-light);
 }
 
 .flex-grow {
   flex-grow: 1;
 }
 
-.icon-button {
-  cursor: pointer;
-  background: none;
-  border: none;
-  width: 24px;
-  height: 24px;
-}
-
-.icon-button:disabled {
-  cursor: not-allowed;
-}
-
-.available-players-container {
-  display: grid;
-  gap: 0.5rem;
-  grid-template-columns: 1fr 1fr;
-  padding: 0rem 0.5rem;
-}
-
-.selected-players-container {
-  padding: 0rem 0.5rem;
-}
-
-.available-player-cmp {
-  background: white;
-  border-radius: 8px;
-  padding: 1rem;
+.errors-container {
   display: flex;
-  gap: 0.5rem;
-  filter: drop-shadow(1px 2px 2px hsla(0, 0%, 0%, 0.426));
-
-  .name {
-    margin-bottom: 0.25rem;
-  }
-
-  .title-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-grow: 1;
-  }
-
-  .controls-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .player-avatar {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-
-    background-color: azure;
-  }
-}
-
-.selected-player-cmp {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  padding: 0.75rem 0rem;
-  border-bottom: 1px solid;
-  border-bottom-color: var(--border-color-light);
-
-  .name {
-    min-width: 40%;
-  }
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .team-statistic-container {
   display: flex;
-  gap: 1rem;
-  max-width: 200rem;
+  flex-direction: column;
+  gap: 0.25rem;
   padding: 1rem 0rem;
 }
 
 .statistic {
   .title {
-    font-size: 0.9rem;
+    color: var(--on-surface);
     font-weight: 400;
   }
-
   .value {
-    font-size: 1rem;
     color: var(--on-surface-light);
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  header {
-    min-height: 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo-container {
-    display: none;
-  }
-
-  .nav-container {
-    display: none;
-  }
-
-  .row-container {
-    flex-direction: column;
-  }
-
-  .main-container {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .available-players-section {
-    height: auto;
-    width: auto;
-  }
-
-  .selected-players-section {
-    height: auto;
-    width: auto;
-  }
-
-  .section-title-bar {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  .available-players-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .available-player-cmp {
-    width: auto;
-  }
-
-  .selected-players-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .team-statistic-container {
-    flex-direction: column;
-    gap: 0.125rem;
-
-    padding: 0.5rem;
-  }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .available-players-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
   }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  .available-players-container {
+  .header-container {
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-container {
+    display: block;
+  }
+
+  .main-container {
     display: grid;
-    gap: 0.5rem;
     grid-template-columns: 1fr 1fr;
-    padding: 0rem 0.5rem;
+  }
+
+  .team-statistic-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .statistic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

@@ -1,13 +1,19 @@
-<header class="row-container">
-  <div class="logo-container">Logo</div>
+<header class="header-container">
 
-  <h1>Create your Dream Team</h1>
+  <div class="logo-n-name-container">
+    <img src="app-logo.svg" alt="Logo" class="app-logo" />
+    <div>
+      <p>Create your</p>
+      <h1>Dream Team</h1>
+    </div>
+  </div>
 
   <nav class="nav-container">
     <ul>
       <li>About this app</li>
     </ul>
   </nav>
+  
 </header>
 
 <main class="main-container">
@@ -19,7 +25,7 @@
     </div>
 
     @if (showInitialAlert()) {
-    <app-alert (close)="onAlertClose()">
+    <app-alert (close)="onAlertClose()" [dismissible]="true">
       <span>Click select button to add a player to your team.</span>
     </app-alert>
     }
@@ -47,22 +53,22 @@
     <div class="section-title-bar">
       <h1>Dream Team's Players</h1>
       @if (playersSvc.selectedTeam().total===playersSvc.rule.total) {
-      <div>Your Team is ready!</div>
+      <app-alert [type]="'success'">Your Team is ready! 💐</app-alert>
       }
     </div>
 
     <div class="selected-players-bg">
       <div class="errors-container">
         @if (playersSvc.selectedTeam().errorWicketKeepers) {
-        <div>Team should have one Wicket Keeper.</div>
+        <app-alert [type]="'warn'">❗ A Wicket Keeper is required.</app-alert>
         } @if (playersSvc.selectedTeam().errorBatters) {
-        <div>
-          Minimum {{ playersSvc.rule.batsmen.minimum }} Batsmen are required.
-        </div>
+        <app-alert [type]="'warn'">
+          ❗ Minimum {{ playersSvc.rule.batsmen.minimum }} Batsmen are required.
+        </app-alert>
         } @if (playersSvc.selectedTeam().errorBowlers) {
-        <div>
-          Minimum {{ playersSvc.rule.bowlers.minimum }} Bowlers are required.
-        </div>
+        <app-alert [type]="'warn'">
+          ❗ Minimum {{ playersSvc.rule.bowlers.minimum }} Bowlers are required.
+        </app-alert>
         }
       </div>
 
@@ -108,7 +114,6 @@
   </section>
 
   <router-outlet />
-
 </main>
 
 <footer></footer>

@@ -1,5 +1,6 @@
-<div class="flex-grow">
+<div>
   <ng-content></ng-content>
 </div>
-
+@if (dismissible()) {
 <button icon-button="close" (click)="onCloseClick($event)"></button>
+}

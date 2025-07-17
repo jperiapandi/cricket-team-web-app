@@ -11,12 +11,12 @@ import { IconButtonDirective } from '../../directives/icon.button';
   },
 })
 export class AlertComponent {
-  type = input<'info' | 'warn' | 'error'>('info');
+  type = input<'info' | 'warn' | 'error' | 'success'>('info');
   dismissible = input(false);
   close = output();
 
   readonly classNames = computed(() => {
-    return 'alert-cmp';
+    return `alert-cmp ${this.type()}`;
   });
 
   onCloseClick(evt: MouseEvent) {

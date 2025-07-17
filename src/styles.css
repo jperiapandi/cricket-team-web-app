@@ -75,6 +75,10 @@ ol {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 .player-avatar {
   width: 5rem;
   height: 5rem;
@@ -133,6 +137,10 @@ ol {
   color: var(--on-primary);
   padding: 1rem 1rem;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
   .logo-n-name-container {
     display: flex;
     gap: 1rem;
@@ -147,10 +155,14 @@ ol {
       aspect-ratio: 1;
     }
   }
+
+  a{
+    color: var(--on-primary);
+  }
 }
 
 .nav-container {
-  display: none;
+  /* display: none; */
 }
 
 .main-container {

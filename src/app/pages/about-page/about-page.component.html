@@ -1,0 +1,85 @@
+<header class="header-container">
+  <div class="logo-n-name-container">
+    <button [icon-button]="'arrow_back'" (click)="onBackClick()"></button>
+    <div>
+      <p>About</p>
+      <h1>Dream Team - App</h1>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h3>The Challenge:</h3>
+    <h1>"Dream Cricket Team" - Web App</h1>
+  </section>
+
+  <section>
+    <h2>Project Goal:</h2>
+    <p>
+      Build a single-page Angular application that allows a user to create and
+      manage their ultimate 11-player Indian cricket squad. The application
+      should be dynamic, user-friendly, and demonstrate a strong understanding
+      of core Angular principles.
+    </p>
+  </section>
+
+  <section>
+    <h2>Core Features & Requirements:</h2>
+    <ol>
+      <li>Create a Firestore Database to store "players' collection.</li>
+      <li>
+        Create a Firebase Cloud Function (REST API) to fetch data from Firestore
+        DB. [ API GET : "/getPlayers" ]
+      </li>
+      <li>
+        In Angular UI use HttpClient service to load all available Players from
+        Firebase.
+      </li>
+      <li>Use Angular Routes for Home Page and About Page.</li>
+      <li>Save application state in LocalStorage.</li>
+      <li>
+        Create separate components for different parts of the application.
+      </li>
+      <li>
+        Use your own CSS files to give the application a professional and
+        responsive look.
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h1>Developer</h1>
+    <p>Periapandi Jeyaram</p>
+    <a href="mailto:jperiapandi@gmail.com">{{ "jperiapandi@gmail.com" }}</a>
+    <p>+91 9677124584</p>
+  </section>
+
+  <section>
+    <h1>Skills Leveraged</h1>
+    <ol>
+      <li>Angular 19</li>
+      <li>NodeJs</li>
+      <li>TypeScript</li>
+      <li>HTML & CSS</li>
+      <li>Firebase (Google Cloud Platform)</li>
+    </ol>
+  </section>
+  <section>
+    <h1>Source</h1>
+    <p>
+      <a
+        href="https://github.com/jperiapandi/cricket-team-web-app"
+        target="_blank"
+        >Angular (UI)</a
+      >
+    </p>
+    <p>
+      <a
+        href="https://github.com/jperiapandi/cricket-team-cloud-functions"
+        target="_blank"
+        >Firebase Cloud Functions (API)</a
+      >
+    </p>
+  </section>
+</main>

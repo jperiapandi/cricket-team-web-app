@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { SelectedTeam, TeamRule } from '../types/teamRule';
 import { GradesSortMap } from '../types/grade';
+import { WICKET_KEEPER } from '../constants';
 
 @Injectable({
   providedIn: 'root',
@@ -63,7 +64,7 @@ export class PlayersService {
 
     selPlayers.forEach((p) => {
       switch (p.role) {
-        case 'Wicket-Keeper':
+        case WICKET_KEEPER:
           wicketKeeper++;
           break;
         case 'Batter':
@@ -82,7 +83,7 @@ export class PlayersService {
     const errorWicketKeepers = wicketKeeper != this.rule.wicketKeeper;
     const errorBatters = batters + allRounders < this.rule.batsmen.minimum;
     const errorBowlers = bowlers + allRounders < this.rule.bowlers.minimum;
-    
+
     return {
       total: selPlayers.length,
       wicketKeeper,
@@ -110,7 +111,11 @@ export class PlayersService {
     });
   }
 
-  //
+  /**
+   * Add a player to the selected players list
+   * @param id
+   * @returns
+   */
   selectPlayer(id: number) {
     const nextSelectedPlayers = [];
     const player = this.players().find((p) => {
@@ -118,27 +123,39 @@ export class PlayersService {
     });
 
     if (player) {
+      const existingWicketKeeper = this._selectedPlayers().find((p) => {
+        return p.role === WICKET_KEEPER;
+      });
+
+      //When trying to add a Wicket-Keeper
+      if (player.role == WICKET_KEEPER && existingWicketKeeper) {
+        console.warn(
+          `Wicket Keeper ${existingWicketKeeper.name} is already present in your team. Are you willing to replace him with ${player.name}`
+        );
+        return;
+      }
+
       //When trying to add a Player
-      if (this.selectedTeam().total == 11) {
+
+      //:: Last one player needed AND no wicket-keeper in the team yet.
+      if (
+        !existingWicketKeeper &&
+        this.selectedTeam().total == this.rule.total - 1 &&
+        player.role !== WICKET_KEEPER
+      ) {
+        console.warn(
+          `No Wicket Keeper in your team. Please choose a wicket keeper.`
+        );
+        return;
+      }
+      
+      //:: When already 11 players are in the team.
+      if (this.selectedTeam().total == this.rule.total) {
         console.warn(
           `Team selection already complete. Remove some existing players to add ${player.name} to your team!`
         );
 
         return;
-      }
-
-      //When trying to add a Wicket-Keeper
-      if (player.role == 'Wicket-Keeper') {
-        const existingBowler = this._selectedPlayers().find((p) => {
-          return p.role === 'Wicket-Keeper';
-        });
-
-        if (existingBowler) {
-          console.warn(
-            `Wicket Keeper ${existingBowler.name} is already present in ypur team. Are you willing to replace him with ${player.name}`
-          );
-          return;
-        }
       }
 
       this._selectedPlayers.update((prevList) => {

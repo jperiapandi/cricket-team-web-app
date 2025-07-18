@@ -2,9 +2,16 @@
   <img [src]="player().image" class="player-avatar" />
   <div>
     <h3 class="name">{{ player().name }}</h3>
-    <p>Age: {{ player().age }}</p>
-    <p>Grade: {{ player().grade }}</p>
-    <p>{{ player().role }}</p>
+
+    <div class="personal-row">
+      <span>Age: {{ player().age }}</span>
+      <span>Grade: {{ player().grade }}</span>
+    </div>
+
+    <div class="role-row">
+      <img [src]="roleIcon()" alt="role icon"/>
+      <span class="role">{{ player().role }}</span>
+    </div>
   </div>
 </div>
 

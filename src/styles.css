@@ -10,8 +10,8 @@
   --surface-color: hsl(69, 76%, 95%);
 
   --on-primary: hsl(0, 0%, 100%);
-  --on-surface: hsl(29, 100%, 5%);
-  --on-surface-light: hsl(28, 18%, 33%);
+  --on-surface: hsl(88, 94%, 12%);
+  --on-surface-light: hsl(128, 18%, 33%);
 
   --warning-color: hsl(19, 98%, 48%);
   --border-color-light: hsl(0, 0%, 93%);
@@ -130,6 +130,12 @@ a {
   color: var(--success-text-color);
   border-color: var(--success-border-color);
 }
+
+.role {
+  font-weight: 300;
+  color: var(--on-surface);
+  font-size: small;
+}
 /***********************/
 
 .header-container {
@@ -140,7 +146,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   .logo-n-name-container {
     display: flex;
     gap: 1rem;
@@ -156,7 +162,7 @@ a {
     }
   }
 
-  a{
+  a {
     color: var(--on-primary);
   }
 }
@@ -204,18 +210,29 @@ a {
 
   .title-container {
     display: flex;
+    gap: 0.25rem;
   }
 
   .name {
-    font-weight: 350;
+    font-weight: 400;
     color: var(--on-surface);
-    margin-bottom: 0.25rem;
   }
 
-  p {
-    font-size: 0.95rem;
+  .personal-row {
+    display: flex;
+    gap: 0.5rem;
     color: var(--on-surface-light);
+    font-size: 0.95rem;
   }
+
+  .role-row {
+    display: flex;
+    gap: 0.35rem;
+    padding-top: 0.75rem;
+    color: var(--on-surface);
+    font-size: 0.95rem;
+  }
+
   .controls-container {
     display: flex;
     flex-direction: column;
@@ -236,11 +253,45 @@ a {
 .selected-player-cmp {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
   padding: 0.75rem 0rem;
   border-bottom: solid thin var(--border-color-light);
+
+  .name {
+    font-weight: 400;
+    color: var(--on-surface);
+  }
+
+  .col-1 {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+
+    .jersey-num-container {
+      width: 3rem;
+      height: 3rem;
+      /* background-color: var(--surface-color); */
+      /* border: thin solid var(--border-color-light); */
+      /* border-radius: 50%; */
+
+      display: flex;
+      justify-content: center;
+      /* align-items: center; */
+
+      background-image: url(/india-tshirt.svg);
+      background-size: 3rem 3rem;
+      background-repeat: no-repeat;
+
+      span {
+        padding-top: 0.65rem;
+        margin-left: -1px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: wheat;
+      }
+    }
+  }
 }
 
 .flex-grow {
@@ -303,8 +354,8 @@ a {
 
 @media only screen and (min-width: 1200px) {
   .available-players-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 }

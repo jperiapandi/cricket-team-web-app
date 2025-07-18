@@ -34,7 +34,7 @@
       <app-available-player
         *ngFor="let player of playersSvc.players(); index as i"
         [player]="player"
-        (select)="playersSvc.selectPlayer($event)"
+        (select)="onSelectClick($event)"
       ></app-available-player>
     </div>
   </section>

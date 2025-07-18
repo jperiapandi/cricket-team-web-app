@@ -5,6 +5,11 @@ import { environment } from '../../environments/environment';
 import { SelectedTeam, TeamRule } from '../types/teamRule';
 import { GradesSortMap } from '../types/grade';
 import { WICKET_KEEPER } from '../constants';
+import {
+  NoWicketKeeperError,
+  TeamFullError,
+  WicketKeeperExistsError,
+} from '../types/appError';
 
 @Injectable({
   providedIn: 'root',
@@ -129,10 +134,7 @@ export class PlayersService {
 
       //When trying to add a Wicket-Keeper
       if (player.role == WICKET_KEEPER && existingWicketKeeper) {
-        console.warn(
-          `Wicket Keeper ${existingWicketKeeper.name} is already present in your team. Are you willing to replace him with ${player.name}`
-        );
-        return;
+        throw new WicketKeeperExistsError();
       }
 
       //When trying to add a Player
@@ -143,19 +145,12 @@ export class PlayersService {
         this.selectedTeam().total == this.rule.total - 1 &&
         player.role !== WICKET_KEEPER
       ) {
-        console.warn(
-          `No Wicket Keeper in your team. Please choose a wicket keeper.`
-        );
-        return;
+        throw new NoWicketKeeperError();
       }
-      
+
       //:: When already 11 players are in the team.
       if (this.selectedTeam().total == this.rule.total) {
-        console.warn(
-          `Team selection already complete. Remove some existing players to add ${player.name} to your team!`
-        );
-
-        return;
+        throw new TeamFullError();
       }
 
       this._selectedPlayers.update((prevList) => {

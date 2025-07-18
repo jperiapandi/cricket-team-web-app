@@ -7,6 +7,15 @@ import { AlertComponent } from '../../components/alert/alert.component';
 import { NgForOf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconButtonDirective } from '../../directives/icon.button';
+import { DialogService } from '../../services/dialogSvc';
+import {
+  NoWicketKeeperError,
+  TeamFullError,
+  WicketKeeperExistsError,
+} from '../../types/appError';
+import { WkExistsErrorComponent } from '../../components/wk-exists-error/wk-exists-error.component';
+import { WkNeedErrorComponent } from '../../components/wk-need-error/wk-need-error.component';
+import { TeamFullErrorComponent } from '../../components/team-full-error/team-full-error.component';
 
 @Component({
   selector: 'app-home-page',
@@ -16,12 +25,14 @@ import { IconButtonDirective } from '../../directives/icon.button';
     AlertComponent,
     NgForOf,
     RouterLink,
-    IconButtonDirective
+    IconButtonDirective,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit {
+  private dialog = inject(DialogService);
+
   readonly playersSvc = inject(PlayersService);
   title = 'India Cricket Team';
 
@@ -33,6 +44,28 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.playersSvc.getPlayers();
+  }
+
+  onSelectClick(id: number) {
+    try {
+      this.playersSvc.selectPlayer(id);
+    } catch (err) {
+      if (err instanceof WicketKeeperExistsError) {
+        this.dialog.openModal(WkExistsErrorComponent);
+        return;
+      }
+      if (err instanceof NoWicketKeeperError) {
+        this.dialog.openModal(WkNeedErrorComponent);
+        return;
+      }
+
+      if (err instanceof TeamFullError) {
+        this.dialog.openModal(TeamFullErrorComponent);
+        return;
+      }
+
+      console.error(err);
+    }
   }
 
   onAlertClose() {

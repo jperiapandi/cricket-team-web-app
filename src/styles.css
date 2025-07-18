@@ -50,6 +50,20 @@
 }
 
 /** Styles applicable for all devices **/
+dialog {
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  width: auto;
+  margin: auto;
+  left: 5%;
+  right: 5%;
+}
+
+dialog::backdrop {
+  background-color: black;
+  opacity: 60%;
+}
 
 button {
   cursor: pointer;
@@ -321,8 +335,24 @@ a {
   }
 }
 
+.error-cmp-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .footer{
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+}
+
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
+  dialog {
+    max-width: 600px;
+  }
+
   .header-container {
     padding: 1rem 1rem;
     display: flex;

@@ -11,5 +11,6 @@ import { SelectedTeam } from '../../types/teamRule';
   },
 })
 export class TeamStatusComponent {
+  title = input('');
   team = input.required<SelectedTeam>();
 }

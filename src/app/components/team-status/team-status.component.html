@@ -1,31 +1,44 @@
 @if (team()) {
-<div class="total-box">
-  <div class="total-value">
-    {{ team().total }}
-  </div>
-  <p>Players</p>
+
+<div class="title-bar">
+  <h1>{{title()}}</h1>
 </div>
-<div class="stats-container">
-  <div class="status-row">
-    <img src="plyr-keeper.svg" alt="" />
-    <!-- <span>Wicket Keeper</span> -->
-    <span>{{ team().wicketKeeper }}</span>
+
+<div class="content">
+  <div class="total-box">
+    <div class="total-value">
+      {{ team().total }}
+    </div>
+    <p>Players</p>
   </div>
-  <div class="status-row">
-    <img src="bat.svg" alt="" />
-    <!-- <span>Batters</span> -->
-    <span>{{ team().batters }}</span>
+  <div class="stats-container">
+    <div class="status-row">
+      <img src="plyr-keeper.svg" alt="wicket keeper" />
+      <span>{{ team().wicketKeeper }}</span>
+    </div>
+    <div class="status-row">
+      <img src="bat.svg" alt="batter" />
+      <span>{{ team().batters }}</span>
+    </div>
+    <div class="status-row">
+      <img src="ball.svg" alt="bowler" />
+      <span>{{ team().bowlers }}</span>
+    </div>
+    <div class="status-row">
+      <img src="all-rounder.svg" alt="all rounder" />
+      <span>{{ team().allRounders }}</span>
+    </div>
   </div>
-  <div class="status-row">
-    <img src="ball.svg" alt="" />
-    <!-- <span>Bowler</span> -->
-    <span>{{ team().bowlers }}</span>
-  </div>
-  <div class="status-row">
-    <img src="all-rounder.svg" alt="" />
-    <!-- <span>All Rounders</span> -->
-    <span>{{ team().allRounders }}</span>
-  </div>
+</div>
+
+<div class="footer">
+  @if (team().errorLessPlayers) {
+  <p>
+    {{ team().errorMsgLessPlayers }}
+  </p>
+  }@else {
+  <p>Your Team is Ready! 💐</p>
+  }
 </div>
 
 }

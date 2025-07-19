@@ -102,7 +102,7 @@ export class PlayersService {
     if (errorLessPlayers && selPlayers.length == 0) {
       errorMsgLessPlayers = `Start adding players to your Dream Team.`;
     }
-    
+
     if (errorLessPlayers && this.rule.total - selPlayers.length == 1) {
       errorMsgLessPlayers = `Add ${
         this.rule.total - selPlayers.length
@@ -139,10 +139,8 @@ export class PlayersService {
 
     this.http.get<GetPlayersAPIResp>(environment.api.getPlayers).subscribe({
       next: (v) => {
-        setInterval(() => {
-          this._payers.set(v.players);
-          this._httpState.set('success');
-        }, 5000);
+        this._payers.set(v.players);
+        this._httpState.set('success');
       },
       error: (err) => {
         this._payers.set([]);

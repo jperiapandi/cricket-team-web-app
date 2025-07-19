@@ -47,23 +47,21 @@
   </section>
 
   <section class="selected-players-section">
-    @if (playersSvc.selectedPlayers().length==0) {
-    <div class="no-players-container">
-      <app-alert>
-        There are no players available in your team. Start creating your Dream
-        Team by selecting Players.
-      </app-alert>
-    </div>
-
-    } @else {
-
-    <div class="section-title-bar">
+    <div class="section-title-bar hide-on-big-devices">
+      @if (playersSvc.selectedTeam().total==0) {
+      <p>No players are selected yet.!</p>
+      } @else {
       <h1>Dream Team's Players</h1>
-      @if (playersSvc.selectedTeam().total===playersSvc.rule.total) {
-      <app-alert [type]="'success'">Your Team is ready! 💐</app-alert>
       }
     </div>
+    <div class="section-title-bar hide-on-small-devices">
+      <app-team-status
+        [title]="'Dream Team\'s Players'"
+        [team]="playersSvc.selectedTeam()"
+      />
+    </div>
 
+    @if (playersSvc.selectedTeam().total>0) {
     <div class="selected-players-bg">
       <div class="errors-container">
         @if (playersSvc.selectedTeam().errorWicketKeepers) {
@@ -79,35 +77,6 @@
         }
       </div>
 
-      <div class="team-statistic-container">
-        <div class="statistic">
-          <span class="title">Total: </span>
-          <span class="value">{{ playersSvc.selectedTeam().total }}</span>
-        </div>
-
-        <div class="statistic">
-          <span class="title">Wicket Keeper: </span>
-          <span class="value">{{
-            playersSvc.selectedTeam().wicketKeeper
-          }}</span>
-        </div>
-
-        <div class="statistic">
-          <span class="title">Batters: </span>
-          <span class="value">{{ playersSvc.selectedTeam().batters }}</span>
-        </div>
-
-        <div class="statistic">
-          <span class="title">Bowlers: </span>
-          <span class="value">{{ playersSvc.selectedTeam().bowlers }}</span>
-        </div>
-
-        <div class="statistic">
-          <span class="title">All Rounders: </span>
-          <span class="value">{{ playersSvc.selectedTeam().allRounders }}</span>
-        </div>
-      </div>
-
       <div class="selected-players-container">
         <app-selected-player
           *ngFor="let player of playersSvc.selectedPlayers(); index as i"
@@ -116,30 +85,14 @@
         ></app-selected-player>
       </div>
     </div>
-
     }
   </section>
 
   <section class="team-quick-view-section">
-    <div class="quick-view-content">
-      <div class="title-bar">
-        <h1>Dream Team</h1>
-      </div>
-
-      <div class="content">
-        <app-team-status [team]="playersSvc.selectedTeam()" />
-      </div>
-
-      <div class="footer">
-        @if (playersSvc.selectedTeam().errorLessPlayers) {
-        <p>
-          {{ playersSvc.selectedTeam().errorMsgLessPlayers }}
-        </p>
-        }@else {
-        <p>Your Team is Ready! 💐</p>
-        }
-      </div>
-    </div>
+    <app-team-status
+      [title]="'Dream Team'"
+      [team]="playersSvc.selectedTeam()"
+    />
   </section>
 
   }@else {

@@ -21,4 +21,7 @@ export type SelectedTeam = {
   errorWicketKeepers: boolean;
   errorBatters: boolean;
   errorBowlers: boolean;
+
+  errorLessPlayers: boolean;
+  errorMsgLessPlayers: string;
 };

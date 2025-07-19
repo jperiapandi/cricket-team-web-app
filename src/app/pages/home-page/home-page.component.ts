@@ -4,7 +4,7 @@ import { SHOW_INITIAL_ALERT } from '../../constants';
 import { SelectedPlayerComponent } from '../../components/selected-player/selected-player.component';
 import { AvailablePlayerComponent } from '../../components/available-player/available-player.component';
 import { AlertComponent } from '../../components/alert/alert.component';
-import { NgForOf } from '@angular/common';
+import { NgClass, NgForOf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IconButtonDirective } from '../../directives/icon.button';
 import { DialogService } from '../../services/dialogSvc';
@@ -16,6 +16,7 @@ import {
 import { WkExistsErrorComponent } from '../../components/wk-exists-error/wk-exists-error.component';
 import { WkNeedErrorComponent } from '../../components/wk-need-error/wk-need-error.component';
 import { TeamFullErrorComponent } from '../../components/team-full-error/team-full-error.component';
+import { TeamStatusComponent } from "../../components/team-status/team-status.component";
 
 @Component({
   selector: 'app-home-page',
@@ -23,10 +24,11 @@ import { TeamFullErrorComponent } from '../../components/team-full-error/team-fu
     AvailablePlayerComponent,
     SelectedPlayerComponent,
     AlertComponent,
-    NgForOf,
+    NgForOf, NgClass,
     RouterLink,
     IconButtonDirective,
-  ],
+    TeamStatusComponent
+],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })

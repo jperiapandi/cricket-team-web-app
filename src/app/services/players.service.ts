@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { SelectedTeam, TeamRule } from '../types/teamRule';
 import { GradesSortMap } from '../types/grade';
-import { WICKET_KEEPER } from '../constants';
+import { ALL_ROUNDER, BATTER, BOWLER, WICKET_KEEPER } from '../constants';
 import {
   NoWicketKeeperError,
   TeamFullError,
@@ -30,13 +30,16 @@ export class PlayersService {
     },
   };
 
+  private _httpState = signal<string>('');
+  readonly httpState = this._httpState.asReadonly();
+
   private _payers = signal<Player[]>([]);
   //
   readonly players = computed<Player[]>(() => {
-    const oriPlayers = this._payers();
+    const srcPlayers = this._payers();
     const selPlayers = this._selectedPlayers();
 
-    const updatedPlayers = oriPlayers.map((p1) => {
+    const updatedPlayers = srcPlayers.map((p1) => {
       const selected = selPlayers.find((p2) => p2.id == p1.id) != undefined;
       if (selected) {
         return {
@@ -72,13 +75,13 @@ export class PlayersService {
         case WICKET_KEEPER:
           wicketKeeper++;
           break;
-        case 'Batter':
+        case BATTER:
           batters++;
           break;
-        case 'Bowler':
+        case BOWLER:
           bowlers++;
           break;
-        case 'All-Rounder':
+        case ALL_ROUNDER:
           allRounders++;
           break;
       }
@@ -88,6 +91,23 @@ export class PlayersService {
     const errorWicketKeepers = wicketKeeper != this.rule.wicketKeeper;
     const errorBatters = batters + allRounders < this.rule.batsmen.minimum;
     const errorBowlers = bowlers + allRounders < this.rule.bowlers.minimum;
+    const errorLessPlayers = selPlayers.length < this.rule.total;
+
+    let errorMsgLessPlayers = '';
+    if (errorLessPlayers && this.rule.total - selPlayers.length > 1) {
+      errorMsgLessPlayers = `Add ${
+        this.rule.total - selPlayers.length
+      } more players.`;
+    }
+    if (errorLessPlayers && selPlayers.length == 0) {
+      errorMsgLessPlayers = `Start adding players to your Dream Team.`;
+    }
+    
+    if (errorLessPlayers && this.rule.total - selPlayers.length == 1) {
+      errorMsgLessPlayers = `Add ${
+        this.rule.total - selPlayers.length
+      } more player.`;
+    }
 
     return {
       total: selPlayers.length,
@@ -99,18 +119,34 @@ export class PlayersService {
       errorWicketKeepers,
       errorBatters,
       errorBowlers,
+      errorLessPlayers,
+      errorMsgLessPlayers,
     };
   });
 
-  constructor() {}
+  constructor() {
+    console.log(`PlayersService is created`);
+  }
 
   getPlayers() {
+    if (this._payers().length > 0) {
+      //Players are already loaded.
+      console.log(`Players are already loaded from API.`);
+      return;
+    }
+    console.log(`Start loading players from API.`);
+    this._httpState.set('loading');
+
     this.http.get<GetPlayersAPIResp>(environment.api.getPlayers).subscribe({
       next: (v) => {
-        this._payers.set(v.players);
+        setInterval(() => {
+          this._payers.set(v.players);
+          this._httpState.set('success');
+        }, 5000);
       },
       error: (err) => {
         this._payers.set([]);
+        this._httpState.set('error');
         console.error(err);
       },
     });
@@ -128,6 +164,11 @@ export class PlayersService {
     });
 
     if (player) {
+      //:: When already 11 players are in the team.
+      if (this.selectedTeam().total == this.rule.total) {
+        throw new TeamFullError();
+      }
+
       const existingWicketKeeper = this._selectedPlayers().find((p) => {
         return p.role === WICKET_KEEPER;
       });
@@ -146,11 +187,6 @@ export class PlayersService {
         player.role !== WICKET_KEEPER
       ) {
         throw new NoWicketKeeperError();
-      }
-
-      //:: When already 11 players are in the team.
-      if (this.selectedTeam().total == this.rule.total) {
-        throw new TeamFullError();
       }
 
       this._selectedPlayers.update((prevList) => {

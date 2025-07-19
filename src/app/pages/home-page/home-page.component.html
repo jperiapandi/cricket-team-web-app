@@ -16,7 +16,14 @@
   </nav>
 </header>
 
-<main class="main-container">
+<main
+  [ngClass]="
+    playersSvc.httpState() == 'success'
+      ? 'main-container'
+      : 'main-container-preload'
+  "
+>
+  @if (playersSvc.httpState()== 'success') {
   <section class="available-players-section">
     <div class="section-title-bar">
       <h1>Available Players</h1>
@@ -112,4 +119,32 @@
 
     }
   </section>
+
+  <section class="team-quick-view-section">
+    <div class="quick-view-content">
+      <div class="title-bar">
+        <h1>Dream Team</h1>
+      </div>
+
+      <div class="content">
+        <app-team-status [team]="playersSvc.selectedTeam()" />
+      </div>
+
+      <div class="footer">
+        @if (playersSvc.selectedTeam().errorLessPlayers) {
+        <p>
+          {{ playersSvc.selectedTeam().errorMsgLessPlayers }}
+        </p>
+        }@else {
+        <p>Your Team is Ready! 💐</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  }@else {
+  <section>
+    <div>Loading data.. please wait.</div>
+  </section>
+  }
 </main>

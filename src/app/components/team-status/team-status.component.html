@@ -1,0 +1,31 @@
+@if (team()) {
+<div class="total-box">
+  <div class="total-value">
+    {{ team().total }}
+  </div>
+  <p>Players</p>
+</div>
+<div class="stats-container">
+  <div class="status-row">
+    <img src="plyr-keeper.svg" alt="" />
+    <!-- <span>Wicket Keeper</span> -->
+    <span>{{ team().wicketKeeper }}</span>
+  </div>
+  <div class="status-row">
+    <img src="bat.svg" alt="" />
+    <!-- <span>Batters</span> -->
+    <span>{{ team().batters }}</span>
+  </div>
+  <div class="status-row">
+    <img src="ball.svg" alt="" />
+    <!-- <span>Bowler</span> -->
+    <span>{{ team().bowlers }}</span>
+  </div>
+  <div class="status-row">
+    <img src="all-rounder.svg" alt="" />
+    <!-- <span>All Rounders</span> -->
+    <span>{{ team().allRounders }}</span>
+  </div>
+</div>
+
+}
